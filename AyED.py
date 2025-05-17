@@ -1,0 +1,2035 @@
+import getpass
+import pickle
+import os.path
+import os
+import sys
+import datetime
+import time
+class Usuarios:
+    def __init__(self) -> None:
+        self.CodUsuario = 0
+        self.NombreUsuario = " ".ljust(100, " ")
+        self.ClaveUsuario = " ".ljust(8, " ")
+        self.TipoUsuario = " ".ljust(20, " ")
+class Locales:
+    def __init__(self) -> None:
+        self.CodLocal = 0
+        self.NombreLocal = " ".ljust(30, " ")
+        self.UbiLocal = " ".ljust(30, " ")
+        self.RubroLocal = " ".ljust(12, " ")
+        self.CodUsuario = 0
+        self.Estado = ""
+class Promociones:
+    def __init__(self) -> None:
+        self.CodPromo = 0
+        self.TextoPromo = "".ljust(200, " ")
+        self.FechaDesdePromo = ""
+        self.FechaHastaPromo = ""
+        self.DiaSemana = [0] * 7
+        self.Estado = "".ljust(10, " ")
+        self.CodLocal = 0
+class Uso_Promocion:
+    def __init__(self) -> None:
+        self.CodCliente = 0
+        self.CodPromo = 0
+        self.FechaUsoPromo = ""
+class R_Rub:
+    def __init__(self) -> None:
+        self.Nom = " ".ljust(12," ")
+        self.Ca = 0
+Rubros = [R_Rub] * 3
+#Instanciando las clases para asignar los atributos respectivos
+cl1 = R_Rub()
+cl1.Nom = "perfumeria".ljust(12," ")
+cl1.Ca = 1
+Rubros[0] = cl1
+cl2 = R_Rub()
+cl2.Nom = "indumentaria".ljust(12," ")
+cl2.Ca = 1
+Rubros[1] = cl2
+cl3 = R_Rub()
+cl3.Nom = "comida".ljust(12," ")
+cl3.Ca = 1
+Rubros[2] = cl3
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCIÓN DE DETALLES ESTÉTICOS # (Inicio)
+def separador():
+    print(70 * "-")
+def Exhibicion():
+    if os.path.getsize(AFL) != 0:
+        or_archivo()
+        ALL.seek(0, 0)
+        Aux_I = pickle.load(ALL)
+        T_RL = ALL.tell()
+        T_AL = os.path.getsize(AFL)
+        C_RL = round(T_AL / T_RL) 
+        i = 0
+        borde = "║"
+        label = "║Codigo local"
+        label += borde
+        label += "Codigo Usuario"
+        label += borde
+        label += " " * 12
+        label += "Nombre"
+        label += " " * 12
+        label += borde
+        label += " " * 10
+        label += "Ubicacion"
+        label += " " * 11
+        label += borde
+        label += " " * 3
+        label += "Rubro"
+        label += " " * 4
+        label += borde
+        label += "Estado║"
+        sys.stdout.write("╔")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(6 * "═")
+        sys.stdout.write("╗\n")
+        print(label)
+        while ALL.tell() <= T_AL:
+            sys.stdout.write("╠")
+            sys.stdout.write(12 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(14 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(30 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(30 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(12 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(6 * "═")
+            sys.stdout.write("╣\n")
+            ALL.seek(i * T_RL, 0)
+            Auxiliar = pickle.load(ALL)
+            item = ""
+            item += "║"
+            item += str(Auxiliar.CodLocal).center(12)
+            item += borde
+            item += str(Auxiliar.CodUsuario).center(14)
+            item += borde
+            item += Auxiliar.NombreLocal.strip().center(30)
+            item += borde
+            item += Auxiliar.UbiLocal.strip().center(30)
+            item += borde
+            item += Auxiliar.RubroLocal.strip().center(12)
+            item += borde
+            item += Auxiliar.Estado.center(6)
+            item += "║"
+            i += 1
+            ALL.seek((i * T_RL) +20 , 0)
+            print(item)
+        sys.stdout.write("╚")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(6 * "═")
+        sys.stdout.write("╝\n")
+    else:
+        print("Aun no hay ningún local cargado")
+def Exhibicion_Crear_D():
+    pos = Bs_Usu(User_g)
+    ALU.seek(pos,0)
+    R_Usu = pickle.load(ALU)
+    if Bs_Loc_Usu(R_Usu.CodUsuario) != -1:
+        or_archivo()
+        ALL.seek(0, 0)
+        Aux_I = pickle.load(ALL)
+        T_RL = ALL.tell()
+        T_AL = os.path.getsize(AFL)
+        C_RL = round(T_AL / T_RL) 
+        i = 0
+        borde = "║"
+        label = "║Codigo local"
+        label += borde
+        label += "Codigo Usuario"
+        label += borde
+        label += " " * 12
+        label += "Nombre"
+        label += " " * 12
+        label += borde
+        label += " " * 10
+        label += "Ubicacion"
+        label += " " * 11
+        label += borde
+        label += " " * 3
+        label += "Rubro"
+        label += " " * 4
+        label += borde
+        label += "Estado║"
+        sys.stdout.write("╔")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(6 * "═")
+        sys.stdout.write("╗\n")
+        print(label)
+        ALL.seek(0, 0)
+        while ALL.tell() < T_AL:
+            Auxiliar = pickle.load(ALL)
+            if Auxiliar.CodUsuario == R_Usu.CodUsuario:
+                sys.stdout.write("╠")
+                sys.stdout.write(12 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(14 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(30 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(30 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(12 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(6 * "═")
+                sys.stdout.write("╣\n")
+                item = ""
+                item += "║"
+                item += str(Auxiliar.CodLocal).center(12)
+                item += borde
+                item += str(Auxiliar.CodUsuario).center(14)
+                item += borde
+                item += Auxiliar.NombreLocal.strip().center(30)
+                item += borde
+                item += Auxiliar.UbiLocal.strip().center(30)
+                item += borde
+                item += Auxiliar.RubroLocal.strip().center(12)
+                item += borde
+                item += Auxiliar.Estado.center(6)
+                item += "║"
+                print(item)
+        sys.stdout.write("╚")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(6 * "═")
+        sys.stdout.write("╝\n")
+def Exhibicion_Prom():
+    if os.path.getsize(AFP) != 0:
+        ALP.seek(0, 0)
+        Aux_I = pickle.load(ALP)
+        T_RP = ALP.tell()
+        T_AP = os.path.getsize(AFP)
+        C_RP = round(T_AP / T_RP) 
+        i = 0
+        borde = "║"
+        label = "║Codigo Promo"
+        label += borde
+        label += " " * 15
+        label += "Texto Promo"
+        label += " " * 15
+        label += borde
+        label += " " * 5
+        label += "Fecha Desde"
+        label += " " * 5
+        label += borde
+        label += " " * 5
+        label += "Fecha Hasta"
+        label += " " * 5
+        label += borde
+        label += "Dia Semana"
+        label += borde
+        label += " " * 4
+        label += "Estado"
+        label += " " * 4
+        label += borde
+        label += " Cod Local║"
+        label += " " 
+        sys.stdout.write("╔")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(22 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(10 * "═")
+        sys.stdout.write("╗\n")
+        print(label)
+        while ALP.tell() <= T_AP:
+            sys.stdout.write("╠")
+            sys.stdout.write(12 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(14 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(30 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(30 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(22 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(14 * "═")
+            sys.stdout.write("╬")
+            sys.stdout.write(10 * "═")
+            sys.stdout.write("╣\n")
+            ALP.seek(i * T_RP, 0)
+            R_Pro = pickle.load(ALP)
+            item = ""
+            item += "║"
+            item += str(R_Pro.CodPromo).center(12)
+            item += borde
+            item += R_Pro.TextoPromo.strip().center(14)
+            item += borde
+            item += str(R_Pro.FechaDesdePromo).center(30)
+            item += borde
+            item += str(R_Pro.FechaHastaPromo).center(30)
+            item += borde
+            item += str(R_Pro.DiaSemana).center(12)
+            item += " "
+            item += borde
+            item += R_Pro.Estado.center(14)
+            item += borde
+            item += str(R_Pro.CodLocal).center(8)
+            item += "║"
+            i += 1
+            ALP.seek((i * T_RP) + 20 , 0)
+            print(item)
+        sys.stdout.write("╚")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(30 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(22 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(14 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(10 * "═")
+        sys.stdout.write("╝\n")
+    else:
+        print("Aun no hay ninguna promoción cargada")
+def Exhibicion_Clientes_Desc():
+    borde = "║"
+    label = "║Codigo Promo"
+    label += borde
+    label += " " * 15
+    label += "Texto Promo"
+    label += " " * 15
+    label += borde
+    label += " " * 5
+    label += "Fecha Desde"
+    label += " " * 5
+    label += borde
+    label += " " * 5
+    label += "Fecha Hasta"
+    label += " " * 5
+    label += borde
+    sys.stdout.write("╔")
+    sys.stdout.write(12 * "═")
+    sys.stdout.write("╦")
+    sys.stdout.write(41 * "═")
+    sys.stdout.write("╦")
+    sys.stdout.write(21 * "═")
+    sys.stdout.write("╦")
+    sys.stdout.write(21 * "═")
+    sys.stdout.write("╗\n")
+    print(label)
+    ALP.seek(0,0)
+    while ALP.tell() < os.path.getsize(AFP):
+        R_Pro = pickle.load(ALP)
+        if R_Pro.Estado.strip() == "aprobada" and R_Pro.FechaDesdePromo <= datetime.date.today() and R_Pro.FechaHastaPromo >= datetime.date.today():
+          if R_Pro.DiaSemana[datetime.date.today().weekday()] == 1:
+                sys.stdout.write("╠")
+                sys.stdout.write(12 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(41 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(21 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(21 * "═")
+                sys.stdout.write("╣\n")
+                item = ""
+                item += "║"
+                item += str(R_Pro.CodPromo).center(12)
+                item += borde
+                item += R_Pro.TextoPromo.strip().center(41)
+                item += borde
+                item += str(R_Pro.FechaDesdePromo).center(21)
+                item += borde
+                item += str(R_Pro.FechaHastaPromo).center(21)
+                item += "║"
+                print(item)
+    sys.stdout.write("╚")
+    sys.stdout.write(12 * "═")
+    sys.stdout.write("╩")
+    sys.stdout.write(41 * "═")
+    sys.stdout.write("╩")
+    sys.stdout.write(21 * "═")
+    sys.stdout.write("╩")
+    sys.stdout.write(21 * "═")
+    sys.stdout.write("╝\n")
+def Exhibicion_Clientes(Cod_local, Fecha):
+    if Bs_pro_Estado("aprobada".ljust(10," ")) != -1:
+        borde = "║"
+        label = "║Codigo Promo"
+        label += borde
+        label += " " * 15
+        label += "Texto Promo"
+        label += " " * 15
+        label += borde
+        label += " " * 5
+        label += "Fecha Desde"
+        label += " " * 5
+        label += borde
+        label += " " * 5
+        label += "Fecha Hasta"
+        label += " " * 5
+        label += borde
+        sys.stdout.write("╔")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(41 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╗\n")
+        print(label)
+        ALP.seek(0,0)
+        while ALP.tell() < os.path.getsize(AFP):
+            R_Pro = pickle.load(ALP)
+            if R_Pro.CodLocal == Cod_local and R_Pro.Estado.strip() == "aprobada" and R_Pro.FechaDesdePromo <= Fecha and R_Pro.FechaHastaPromo >= Fecha:
+              if R_Pro.DiaSemana[Fecha.weekday()] == 1:
+                    sys.stdout.write("╠")
+                    sys.stdout.write(12 * "═")
+                    sys.stdout.write("╬")
+                    sys.stdout.write(41 * "═")
+                    sys.stdout.write("╬")
+                    sys.stdout.write(21 * "═")
+                    sys.stdout.write("╬")
+                    sys.stdout.write(21 * "═")
+                    sys.stdout.write("╣\n")
+                    item = ""
+                    item += "║"
+                    item += str(R_Pro.CodPromo).center(12)
+                    item += borde
+                    item += R_Pro.TextoPromo.strip().center(41)
+                    item += borde
+                    item += str(R_Pro.FechaDesdePromo).center(21)
+                    item += borde
+                    item += str(R_Pro.FechaHastaPromo).center(21)
+                    item += "║"
+                    print(item)
+        sys.stdout.write("╚")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(41 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╝\n")
+    else:
+        print("No hay promociones aprobadas para este local")
+def Exhibicion_Reportes(Fecha_d,Fecha_h,Cod):
+    if Bs_Pro_Cod(Cod, Fecha_d, Fecha_h) == True:
+        borde = "║"
+        label = "║Codigo Promo"
+        label += borde
+        label += " " * 15
+        label += "Texto Promo"
+        label += " " * 15
+        label += borde
+        label += " " * 5
+        label += "Fecha Desde"
+        label += " " * 5
+        label += borde
+        label += " " * 5
+        label += "Fecha Hasta"
+        label += " " * 5
+        label += borde
+        label += "Cantidad de Usos"
+        label += borde
+        sys.stdout.write("╔")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(41 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╦")
+        sys.stdout.write(16 * "═")
+        sys.stdout.write("╗\n")
+        print(label)
+        ALP.seek(0,0)
+        while ALP.tell() < os.path.getsize(AFP):
+            R_Pro = pickle.load(ALP)
+            if R_Pro.Estado.strip() == "aprobada" and Fecha_d <= R_Pro.FechaDesdePromo and Fecha_h >= R_Pro.FechaHastaPromo and Cod == R_Pro.CodLocal: 
+                sys.stdout.write("╠")
+                sys.stdout.write(12 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(41 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(21 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(21 * "═")
+                sys.stdout.write("╬")
+                sys.stdout.write(16 * "═")
+                sys.stdout.write("╣\n")
+                item = "║"
+                item += str(R_Pro.CodPromo).center(12)
+                item += borde
+                item += R_Pro.TextoPromo.strip().center(41)
+                item += borde
+                item += str(R_Pro.FechaDesdePromo).center(21)
+                item += borde
+                item += str(R_Pro.FechaHastaPromo).center(21)
+                item += borde
+                item += str(Conteo_Usos(R_Pro.CodPromo)).center(16)
+                item += "║"
+                print(item)
+        sys.stdout.write("╚")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(41 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(21 * "═")
+        sys.stdout.write("╩")
+        sys.stdout.write(16 * "═")
+        sys.stdout.write("╝\n")
+    else:
+        print("Este local no presenta promociones dentro de estas fechas")
+def Conteo_Usos(X):
+    if os.path.getsize(AFUP) != 0:
+        cont = 0
+        ALUP.seek(0,0)
+        while ALUP.tell() < os.path.getsize(AFUP):
+            R_Uso_Pro = pickle.load(ALUP)
+            if R_Uso_Pro.CodPromo == X:
+                cont = cont + 1
+        return cont
+    else:
+        return 0
+# SECCIÓN DE DETALLES ESTÉTICOS # (Final)
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCIÓN DE BUSQUEDAS, ORDENAMIENTOS Y OTRAS FUNCIONES# (Inicio )
+def Bs_Usu(valor):
+    T = os.path.getsize(AFU)
+    pos = 0
+    ALU.seek(0, 0)
+    cont = pickle.load(ALU)
+    while ALU.tell() < T and cont.NombreUsuario != valor:
+        pos = ALU.tell()
+        cont = pickle.load(ALU)
+    if cont.NombreUsuario == valor:
+        return pos
+    else:
+        return -1
+def Bs_Usu_Cod(valor):
+    T = os.path.getsize(AFU)
+    pos = 0
+    ALU.seek(0, 0)
+    cont = pickle.load(ALU)
+    while ALU.tell() < T and cont.CodUsuario != valor:
+        pos = ALU.tell()
+        cont = pickle.load(ALU)
+    if cont.CodUsuario == valor:
+        return pos
+    else:
+        return -1
+def Bs_Usu_Tipo(valor):
+    T = os.path.getsize(AFU)
+    pos = 0
+    ALU.seek(0, 0)
+    cont = pickle.load(ALU)
+    while ALU.tell() < T and cont.TipoUsuario != valor:
+        pos = ALU.tell()
+        cont = pickle.load(ALU)
+    if cont.TipoUsuario == valor:
+        return pos
+    else:
+        return -1
+def Bs_Loc(valor):
+    T = os.path.getsize(AFL)
+    pos = 0
+    ALL.seek(0, 0)
+    cont = pickle.load(ALL)
+    while ALL.tell() < T and cont.CodLocal != valor:
+        pos = ALL.tell()
+        cont = pickle.load(ALL)
+    if cont.CodLocal == valor:
+        return pos
+    else:
+        return -1
+def Bs_Loc_Usu(valor):
+    T = os.path.getsize(AFL)
+    pos = 0
+    ALL.seek(0, 0)
+    cont = pickle.load(ALL)
+    while ALL.tell() < T and cont.CodUsuario != valor:
+        pos = ALL.tell()
+        cont = pickle.load(ALL)
+    if cont.CodUsuario == valor:
+        return pos
+    else:
+        return -1
+def or_archivo():
+    ALL.seek(0, 0)
+    Aux_I = pickle.load(ALL)
+    T_RL = ALL.tell()
+    C_RL = int(os.path.getsize(AFL) / T_RL)
+    for i in range(0, C_RL - 1):
+        for j in range(i + 1, C_RL):
+            ALL.seek(i * T_RL, 0)
+            Aux_I = pickle.load(ALL)
+            ALL.seek(j * T_RL, 0)
+            Aux_J = pickle.load(ALL)
+            if Aux_I.NombreLocal > Aux_J.NombreLocal:
+                ALL.seek(i * T_RL, 0)
+                pickle.dump(Aux_J, ALL)
+                ALL.seek(j * T_RL, 0)
+                pickle.dump(Aux_I, ALL)
+                ALL.flush()
+def Bd_archivo(X):
+    ALL.seek(0, 0)
+    R_L = pickle.load(ALL)
+    T_RL = ALL.tell()
+    C_RL = int(os.path.getsize(AFL) / T_RL)
+    inf = 0
+    sup = C_RL - 1
+    medio = (inf + sup) // 2
+    ALL.seek(medio * T_RL, 0)
+    R_L = pickle.load(ALL)
+    while inf < sup and R_L.NombreLocal.strip() != X:
+        if X < R_L.NombreLocal.strip():
+            sup = medio - 1
+        else:
+            inf = medio + 1
+        medio = (inf + sup) // 2
+        if medio >= 0:
+            ALL.seek(medio * T_RL, 0)
+            R_L = pickle.load(ALL)
+    if R_L.NombreLocal.strip() == X:
+        return medio * T_RL
+    else:
+        return -1
+def Bs_Sec_R(arreglo, valor):
+    p = 0
+    while arreglo[p] != valor and p < i_global:
+        p = p + 1
+    if arreglo[p] == valor:
+        return p
+    else:
+        return -1
+def Bs_pro(valor):
+    M = os.path.getsize(AFP)
+    pos = 0
+    ALP.seek(0, 0)
+    R_Pro = pickle.load(ALP)
+    while ALP.tell() < M and R_Pro.CodPromo != valor:
+        pos = ALP.tell()
+        R_Pro = pickle.load(ALP)
+    if R_Pro.CodPromo == valor:
+        return pos
+    else:
+        return -1
+def Bs_pro_Estado(valor):
+    M = os.path.getsize(AFP)
+    pos = 0
+    ALP.seek(0, 0)
+    R_Pro = pickle.load(ALP)
+    while ALP.tell() < M and R_Pro.Estado != valor:
+        pos = ALP.tell()
+        R_Pro = pickle.load(ALP)
+    if R_Pro.Estado == valor:
+        return pos
+    else:
+        return -1
+def Barrido_EstadoyFecha():
+    M = os.path.getsize(AFP)
+    menor = str(datetime.datetime.now())
+    ALP.seek(0, 0)
+    R_Pro = pickle.load(ALP)
+    while ALP.tell() < M:
+        if menor > str(R_Pro.FechaDesdePromo):
+            menor = str(R_Pro.FechaDesdePromo)
+        R_Pro = pickle.load(ALP)
+        
+    return menor
+
+    
+def Bs_Pro_Cod(X, desde, hasta):
+    cond = False
+    T = os.path.getsize(AFP)
+    pos = 0
+    ALP.seek(0, 0)
+    while ALP.tell() < T and cond == False:
+        pos = ALP.tell()
+        cont = pickle.load(ALP)
+        if cont.CodLocal == X and cont.Estado == "aprobada".ljust(10, " ") and desde <= cont.FechaDesdePromo and hasta >= cont.FechaHastaPromo:
+            cond = True
+    return cond
+    
+def Validacion(desde, hasta, mensaje):
+    while True:
+        try:
+            numero = int(
+                input(f"{mensaje}, número entre {desde} y {hasta}: ")
+            )
+            if desde <= numero <= hasta:
+                return numero
+            else:
+                print(
+                    f"El número debe estar entre {desde} y {hasta}. Inténtalo de nuevo."
+                )
+        except ValueError:
+            print("¡Eso no es un número válido! Inténtalo de nuevo.")
+def Validacion_Clientes(desde, hasta, mensaje):
+    while True:
+        try:
+            numero = int(
+                input(f"{mensaje}, hay {hasta} locales: ")
+            )
+            if desde <= numero <= hasta:
+                return numero
+            else:
+                print(
+                    f"El número debe estar entre {desde} y {hasta}. Inténtalo de nuevo."
+                )
+        except ValueError:
+            print("¡Eso no es un número válido! Inténtalo de nuevo.")
+def Validacion_Promos(desde, hasta, mensaje):
+    while True:
+        try:
+            numero = int(
+                input(f"{mensaje}")
+            )
+            if desde <= numero <= hasta:
+                return numero
+            else:
+                print(
+                    f"No es un numero valido, inténtalo de nuevo..."
+                )
+        except ValueError:
+            print("¡Eso no es un número válido! Inténtalo de nuevo.")
+def Validacion_fecha():
+    while True: #NO SE PUEDE PONER TRUE, HAY QUE USAR BANDERAS
+        try:
+            fecha_str = input("Por favor ingresa una fecha en el formato YYYY-MM-DD: ")
+            fecha_ingresada = datetime.datetime.strptime(fecha_str, "%Y-%m-%d").date()
+            
+            fecha_actual = datetime.datetime.now().date()
+            
+            if fecha_ingresada >= fecha_actual:
+                return fecha_ingresada
+            else:
+                print("La fecha ingresada debe ser mayor o igual a la fecha actual. Inténtalo de nuevo.")
+        except ValueError:
+            print("¡Eso no es una fecha válida en el formato correcto (YYYY-MM-DD)! Inténtalo de nuevo.")
+def Validacion_RangoI_Reporte():
+    while True: 
+        try:
+            fecha_str = input("Por favor ingresa la fecha de inicio en el formato YYYY-MM-DD: ")
+            fecha_ingresada = datetime.datetime.strptime(fecha_str, "%Y-%m-%d").date()
+            return fecha_ingresada  
+        except ValueError:
+            print("¡Eso no es una fecha válida en el formato correcto (YYYY-MM-DD)! Inténtalo de nuevo.")
+def Validacion_RangoF_Reporte(X):
+    while True: 
+        try:
+            fecha_str = input("Por favor ingresa la fecha de fin en el formato YYYY-MM-DD: ")
+            fecha_ingresada = datetime.datetime.strptime(fecha_str, "%Y-%m-%d").date()
+            
+            if fecha_ingresada >= X:
+                return fecha_ingresada
+            else:
+                print("La fecha ingresada debe ser mayor o igual a la fecha de inicio. Inténtalo de nuevo.")
+        except ValueError:
+            print("¡Eso no es una fecha válida en el formato correcto (YYYY-MM-DD)! Inténtalo de nuevo.")
+def Validacion_fecha_Desde():
+    while True:
+        try:
+            fecha_str = input("Por favor ingresa la fecha de inicio de la promoción, en el formato YYYY-MM-DD: ")
+            fecha_ingresada = datetime.datetime.strptime(fecha_str, "%Y-%m-%d").date()
+            
+            fecha_actual = datetime.datetime.now().date()
+            
+            if fecha_ingresada >= fecha_actual:
+                return fecha_ingresada
+            else:
+                print("La fecha ingresada debe ser mayor o igual a la fecha actual. Inténtalo de nuevo.")
+        except ValueError:
+            print("¡Eso no es una fecha válida en el formato correcto (YYYY-MM-DD)! Inténtalo de nuevo.")
+
+def valid_mail(X):
+    if "@" in X:
+        return True
+    else:
+        return False
+# SECCIÓN DE BUSQUEDAS, ORDENAMIENTOS Y OTRAS FUNCIONES# (Final)
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCIÓN DE MENUS # (Inicio)
+def mostrar_menu():
+    if cod == "administrador":
+        if eleccion != 1 and eleccion != 4 and eleccion != 0:
+            print(
+                """\033[1;36m---------------Menu principal Administrador---------------\033[0;m
+    0. Salir
+    1. Gestion de locales
+    2. Crear cuentas de dueños de locales
+    3. Aprobar / Denegar solicitud de descuento
+    4. Gestión de Novedades
+    5. Reporte de utilización de descuentos"""
+            )
+        elif eleccion == 1:
+            print(
+                """\033[;32m---------------Gestión de locales---------------\033[0;m
+      a) Crear locales
+      b) Modificar local
+      c) Eliminar local
+      d) Mapa de locales
+      e) Volver"""
+            )
+    elif cod == "dueño de local":
+        print(
+            """\033[1;36m---------------Menu principal Dueños Locales---------------\033[0;m
+    1. Crear descuento
+    2. Reporte de uso de descuentos
+    3. Ver novedades
+    0. Salir"""
+        )
+    else:
+        print(
+            """\033[1;36m---------------Menu principal Cliente---------------\033[0;m
+    1. Buscar descuentos en local
+    2. Solicitar descuento
+    3. Ver novedades
+    0. Salir
+    """
+        )
+
+def Menu_principal():
+    print(
+        """
+               MENU PRINCIPAL    
+    1. Ingresar con usuario registrado
+    2. Registrarse como cliente
+    3. Salir
+    """
+    )
+
+# SECCIÓN Final
+def Finalizar():
+    ALU.close() 
+    ALL.close() 
+    ALP.close() 
+    ALUP.close() 
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCIÓN DE REGISTRO E INICIO DE SESIÓN # (Inicio)
+
+def pedirusuario():
+    global cod
+    global eleccion
+    global bandera
+    global User_g
+    contador = 0
+    # Ingreso de datos:
+    user = input("Escriba su usuario: ").ljust(100, " ")
+    if valid_mail(user):
+        contraseña = getpass.getpass("Ingrese su contraseña: ").ljust(8, " ")
+        pos = Bs_Usu(user)
+        if pos != -1:
+            ALU.seek(pos, 0)
+            cont = pickle.load(ALU)
+            if cont.ClaveUsuario == contraseña:
+                cod = cont.TipoUsuario.strip()
+                User_g = cont.NombreUsuario
+            else:
+                cod = ""
+        else:
+            cod = ""
+    else:
+        input("Usuario incorrecto, recuerde utilizar un formato de mail, presione ENTER para volver a intentarlo...")
+        cod = ""
+
+    # Restricción de intentos del inicio de sesión
+    while cod == "" and contador < 3:
+        contador = contador + 1
+        os.system("cls")
+        if contador <= 2:
+            user = input("Escriba su usuario: ").ljust(100, " ")
+            if valid_mail(user):
+                contraseña =  getpass.getpass("Ingrese su contraseña: ").ljust(8, " ")
+                pos = Bs_Usu(user)
+                if pos != -1:
+                    ALU.seek(pos, 0)
+                    cont = pickle.load(ALU)
+                    if cont.ClaveUsuario == contraseña:
+                        cod = cont.TipoUsuario.strip()
+                        User_g = cont.NombreUsuario
+                    else:
+                        cod = ""
+                else:
+                    cod = ""
+            else:
+                input("Usuario incorrecto, recuerde utilizar un formato de mail, presione ENTER para volver a intentarlo...")
+                cod = ""
+        else:
+            print("Su numero de intentos ha finalizado")
+            bandera = -1
+            eleccion = 0
+    if cod != "":
+        os.system("cls")
+        print("- Hola, has ingresado correctamente")
+
+def Registrarse():
+    R_Usu.NombreUsuario = input("Ingrese el mail del usuario: ").ljust(100, " ")
+    if valid_mail(R_Usu.NombreUsuario):
+        pos = Bs_Usu(R_Usu.NombreUsuario)
+        while len(R_Usu.NombreUsuario) <= 100 and pos != -1:
+            if pos != -1:
+                print("Actualmente ese mail existe, intente con otro...")
+            else:
+                print("Usted ingreso un mail muy largo, intente otra vez")
+            R_Usu.NombreUsuario = input("Ingrese el mail del usuario: ").ljust(100, " ")
+            pos = Bs_Usu(R_Usu.NombreUsuario)
+
+        R_Usu.ClaveUsuario = getpass.getpass("Ingrese su contraseña: ").ljust(8, " ")
+        while len(R_Usu.ClaveUsuario) > 8:
+            print("Usted ingreso una clave muy larga, intente otra vez")
+            R_Usu.ClaveUsuario = getpass.getpass("Ingrese su contraseña: ").ljust(8, " ")
+            
+
+        R_Usu.TipoUsuario = "cliente".ljust(20," ")
+        #Buscando el codigo del anterior registro
+        ALU.seek(0, 0)
+        Aux = pickle.load(ALU)
+        T_aux = ALU.tell()
+        C_RL = int(os.path.getsize(AFU) / T_aux)
+        R_Usu.CodUsuario = C_RL + 1
+        C = os.path.getsize(AFU)
+        ALU.seek(C, 0)
+        pickle.dump(R_Usu, ALU)
+        ALU.flush()
+
+    else:
+        input("Usuario incorrecto, recuerde utilizar un formato de mail, presione ENTER para continuar...")
+
+    R_Usu.TipoUsuario = "cliente".ljust(20," ")
+    #Buscando el codigo del anterior registro
+    ALU.seek(0, 0)
+    Aux = pickle.load(ALU)
+    T_aux = ALU.tell()
+    C_RL = int(os.path.getsize(AFU) / T_aux)
+    R_Usu.CodUsuario = C_RL + 1
+    C = os.path.getsize(AFU)
+    ALU.seek(C, 0)
+    pickle.dump(R_Usu, ALU)
+    ALU.flush()
+
+# SECCIÓN DE REGISTRO E INICIO DE SESIÓN # (Final)
+
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCIÓN ADMINISTRADOR CON TODAS SUS SUB-SECCIONES # (Inicio)
+
+def Admin():
+    global eleccion
+    eleccion = -1
+    while eleccion >= -1 and eleccion < 6:
+        os.system("cls")
+        separador()
+        mostrar_menu()
+        eleccion = Validacion(0,5,"Ingrese una opción")
+        if eleccion >= 0 and eleccion <= 5:
+            os.system("cls")
+            match eleccion:
+                case 0:
+                    eleccion = -2
+                case 1:
+                    os.system("cls")
+                    gestion_de_locales()
+                    eleccion = -1
+                case 2:
+                    os.system("cls")
+                    Crear_D()
+                    input("Ejecución completada, presione ENTER para continuar...")
+                case 3:
+                    os.system("cls")
+                    Aprobar()
+
+                case 4:
+                    os.system("cls")
+                    print("Diagramado en chapin")
+                    eleccion = -1
+                    input("Presione ENTER para continuar...")
+                case 5:
+                    os.system("cls")
+                    Reporte_A()
+
+def Aprobar():
+    if os.path.getsize(AFP) != 0:
+        cond = Bs_pro_Estado("pendiente".ljust(10," "))
+        if cond != -1:
+            ALP.seek(0,0)
+            R_Pro = pickle.load(ALP)
+            TR = ALP.tell()
+            T = os.path.getsize(AFP)
+            C_RL = T//TR
+            ALP.seek(0,0)
+            print("Promociones pendientes...")
+            while ALP.tell() < T :  
+                R_Pro = pickle.load(ALP)
+                if R_Pro.Estado.strip() == "pendiente":
+                    print("Codigo de Promo: ",R_Pro.CodPromo)
+                    print("Texto: ", R_Pro.TextoPromo.strip())
+                    print("Fecha: Desde=",R_Pro.FechaDesdePromo,"Hasta=", R_Pro.FechaHastaPromo)
+                    print("Dias disponibles: ", Semana(R_Pro.DiaSemana))
+                    print("Local al que pertenece: ",R_Pro.CodLocal)
+                    separador()
+            rta = Validacion_Promos(0,C_RL,"Ingrese el codigo de promo que desea cambiar (Ingrese 0 si desea salir): " )
+            while rta != 0:
+                pos = Bs_pro(rta)
+                ALP.seek(pos,0)
+                R_Pro = pickle.load(ALP)
+                if R_Pro.Estado.strip() == "pendiente":
+                    elec = input("Ingrese `Aprobar` o `Denegar` para aceptar o rechazar la promocion (Ingrese 0 si desea salir): ")
+                    while elec != "aprobar".lower() and elec != "Denegar".lower() and elec != "0":
+                        separador()
+                        print("Usted ingreso un valor no aceptado, intente nuevamente...")
+                        elec = input("Ingrese `Aprobar` o `Denegar` para aceptar o rechazar la promocion (Ingrese 0 si desea salir): ")
+                    if elec.lower() == "aprobar":
+                        ALP.seek(pos,0)
+                        R_Pro.Estado = "aprobada".ljust(10," ")
+                        pickle.dump(R_Pro, ALP)
+                        ALP.flush()
+                    elif elec.lower() == "denegar":
+                        ALP.seek(pos,0)
+                        R_Pro.Estado = "rechazada".ljust(10," ")
+                        pickle.dump(R_Pro,ALP)
+                        ALP.flush()      
+                else:
+                    print("La promoción no se encuentra en estado pendiente")
+                rta = Validacion_Promos(0,C_RL,"Ingrese el codigo de promo que desea cambiar (Ingrese 0 si desea salir): " )
+            input("Ejecución completada, presione ENTER para continuar...")
+        else:
+            print("No hay promociones en estado pendiente")
+            input("Presione ENTER para continuar...")
+    else:
+        input("No hay promociones, presione ENTER para continuar")
+
+def Crear_D():
+    R_Usu.NombreUsuario = input("Ingrese el mail del usuario: ").ljust(100, " ")
+    if valid_mail(R_Usu.NombreUsuario):
+        pos = Bs_Usu(R_Usu.NombreUsuario)
+        while len(R_Usu.NombreUsuario) <= 100 and pos != -1:
+            if pos != -1:
+                print("Actualmente ese mail existe, intente con otro...")
+            else:
+                print("Usted ingreso un mail muy largo, intente otra vez")
+            R_Usu.NombreUsuario = input("Ingrese el mail del usuario: ").ljust(100, " ")
+            pos = Bs_Usu(R_Usu.NombreUsuario)
+        R_Usu.ClaveUsuario = getpass.getpass("Ingrese la clave del usuario: ").ljust(8, " ")
+        while len(R_Usu.ClaveUsuario) > 8:
+            print("Usted ingreso una clave muy larga, intente otra vez")
+            R_Usu.ClaveUsuario = getpass.getpass("Ingrese la clave del usuario: ").ljust(8, " ")
+
+        R_Usu.TipoUsuario = "dueño de local".ljust(20," ")
+        ALU.seek(0, 0)
+        Aux = pickle.load(ALU)
+        T_aux = ALU.tell()
+        C_RL = int(os.path.getsize(AFU) / T_aux)
+        R_Usu.CodUsuario = C_RL + 1
+        C = os.path.getsize(AFU)
+        ALU.seek(C, 0)
+        pickle.dump(R_Usu, ALU)
+        ALU.flush()
+
+    else:
+        input("Usuario incorrecto, recuerde utilizar un formato de mail, presione ENTER para continuar...")
+
+
+def gestion_de_locales():
+    global eleccion
+    global decision
+    if Bs_Usu_Tipo("dueño de local".ljust(20," ")) != -1:
+        while (
+            decision != "a"
+            and decision != "b"
+            and decision != "c"
+            and decision != "d"
+            and eleccion == 1
+        ):
+            mostrar_menu()
+            decision = input("Escoger la opción a la que desee acceder: ")
+            os.system("cls")
+            if (
+                decision != "a"
+                and decision != "b"
+                and decision != "c"
+                and decision != "d"
+                and decision != "e"
+            ):
+                separador()
+                print(
+                    "La opción que has elegido es incorrecta, intentelo de nuevo ingresando una de las letras dadas."
+                )
+            elif decision == "a":
+                os.system("cls")
+                locales_cargados = input(
+                    "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                )
+                while (
+                    locales_cargados.lower() != "si"
+                    and locales_cargados.lower() != "no"
+                ):
+                    print("Necesitamos que responda con un Si o No, para continuar")
+                    locales_cargados = input(
+                        "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                    )
+                if locales_cargados.lower() == "si":
+                    Exhibicion()
+                separador()
+                Crear_Locales()
+                input("Presione ENTER para continuar...")
+                os.system("cls")
+                separador()
+                decision = "z"
+            # Nuevo, revisar.
+            elif decision == "b":
+                os.system("cls")
+                locales_cargados = input(
+                    "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                )
+                while (
+                    locales_cargados.lower() != "si"
+                    and locales_cargados.lower() != "no"
+                ):
+                    print("Necesitamos que responda con un Si o No, para continuar")
+                    locales_cargados = input(
+                        "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                    )
+                if locales_cargados.lower() == "si":
+                    Exhibicion()
+                separador()
+                Modificar_Locales()
+                os.system("cls")
+                decision = "z"
+            # Nuevo, revisar.
+            elif decision == "c":
+                os.system("cls")
+                locales_cargados = input(
+                    "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                )
+                while (
+                    locales_cargados.lower() != "si"
+                    and locales_cargados.lower() != "no"
+                ):
+                    print("Necesitamos que responda con un Si o No, para continuar")
+                    locales_cargados = input(
+                        "¿Desea ver los locales cargados hasta el momento?(Si o No): "
+                    )
+                if locales_cargados.lower() == "si":
+                    Exhibicion()
+                separador()
+                Eliminar_Locales()
+                os.system("cls")
+                decision = "z"
+            # Falta desarrollar
+            elif decision == "d":
+                os.system("cls")
+                Mapa_Locales()
+                input("Presione ENTER para continuar...")
+                os.system("cls")
+                decision = "z"
+            elif decision == "e":
+                eleccion = -1
+                decision = "z"
+    else:
+        input("No hay dueños de locales cargados hasta el momento, presione ENTER para volver...")
+
+def Crear_Locales():
+    #Auxiliares para guardar cantidades
+    guard_cant0 = 0 
+    guard_cant1 = 0
+    guard_cant2 = 0
+    verificacion = -2
+    nombre = input(
+        "Ingrese el nombre del local (si no quiere crear locales ingrese 0): "
+    )
+    nombre = nombre.lower()
+    while len(nombre) > 30:
+        print("Usted ingreso un nombre muy largo... ")
+        separador()
+        nombre = input(
+            "Ingrese un nombre mas corto (si no quiere crear locales ingrese 0): "
+        )
+        nombre = nombre.lower()
+    while nombre != "0":
+        # Verificación y carga del nombre:
+        while verificacion != -1 and nombre != "0":
+            if os.path.getsize(AFL) != 0:
+                verificacion = Bd_archivo(nombre)
+                if verificacion != -1:
+                    print("Usted ingreso un nombre ya existente")
+                    separador()
+                    nombre = input(
+                        "Ingrese otro nombre de local (si no quiere crear locales ingrese 0): "
+                    )
+                    nombre = nombre.lower()
+            else:
+                verificacion = -1
+        verificacion = -2
+        if nombre != "0":
+            # Cargando Ubicación:
+            Ubi = input("Ingrese la ubicación para el local: ")
+            while len(Ubi) > 30:
+                print("Usted ingreso una ubicación muy larga... ")
+                separador()
+                Ubi = input("Ingrese una ubicación mas corta: ")
+            # Cargando Rubro:
+            rubro = input(
+                "Ingrese el tipo de rubro del local (perfumería, comida o indumentaria): "
+            )
+            rubro = rubro.lower()
+            # Verificacíon y carga del rubro
+            while ( rubro != "perfumeria" and
+                rubro != "perfumería"
+                and rubro != "indumentaria"
+                and rubro != "comida"
+            ):
+                print(
+                    "Usted no ingreso los datos correctamente porfavor intentelo otra vez..."
+                )
+                separador()
+                rubro = input(
+                    "Ingrese el tipo de rubro del local (perfumería, comida o indumentaria): "
+                )
+                rubro = rubro.lower()
+            if rubro == "perfumeria" or rubro == "perfumería":
+                Rubros[0].Ca = Rubros[0].Ca + 1
+            elif rubro == "indumentaria":
+                Rubros[1].Ca = Rubros[1].Ca + 1
+            else:
+                Rubros[2].Ca = 1 + Rubros[2].Ca
+            
+            # Pidiendo el Código de usuario
+            flag = 0
+            Cod_us = input("Ingrese el codigo de usuario: ")
+            if Cod_us.isdigit():
+                Cod_us = int(Cod_us)
+                Veri = Bs_Usu_Cod(Cod_us)
+                if Veri != -1:
+                    ALU.seek(Veri, 0)
+                    R_Usu = pickle.load(ALU)
+                    if R_Usu.TipoUsuario.strip() == "dueño de local":
+                        flag = 1
+            while flag == 0:
+                print("Usted ingreso un codigo de usuario erroneo, intentelo de nuevo")
+                separador()
+                Cod_us = input("Ingrese el codigo de usuario: ")
+                if Cod_us.isdigit():
+                    Cod_us = int(Cod_us)
+                    Veri = Bs_Usu_Cod(Cod_us)
+                    if Veri != -1:
+                        ALU.seek(Veri, 0)
+                        R_Usu = pickle.load(ALU)
+                        if R_Usu.TipoUsuario.strip() == "dueño de local":
+                            flag = 1
+            #Buscando el codigo del local del anterior registro
+            if os.path.getsize(AFL) > 0:
+                ALL.seek(0, 0)
+                Aux_I = pickle.load(ALL)
+                T_AL = os.path.getsize(AFL)
+                T_aux = ALL.tell()
+                C_RL = round(T_AL / T_aux)
+                Cod_ant = C_RL
+            else:
+                Cod_ant = 0
+            # Cargando registro locales.
+            M = os.path.getsize(AFL)
+            ALL.seek(M, 0)
+            R_Loc.CodLocal = Cod_ant + 1
+            R_Loc.NombreLocal = nombre.ljust(30," ")
+            R_Loc.UbiLocal = Ubi.ljust(30," ")
+            R_Loc.RubroLocal = rubro.ljust(12," ")
+            R_Loc.CodUsuario = Cod_us
+            R_Loc.Estado = "A"
+            pickle.dump(R_Loc, ALL)
+            ALL.flush()
+            separador()
+            or_archivo()
+            # Pidiendo el siguiente local
+            nombre = input(
+                "Ingrese el nombre del local (si no quiere crear locales ingrese 0): "
+            )
+            nombre = nombre.lower()
+    
+    guard_cant0  = Rubros[0].Ca
+    guard_cant1 = Rubros[1].Ca
+    guard_cant2  = Rubros[2].Ca
+    os.system("cls")
+    # Ordenando array de rubros y cantidades (de mayor a menor)
+    for i in range(0, 2):
+        for j in range(i + 1, 3):
+            if Rubros[i].Ca < Rubros[j].Ca:
+                # Ordenando arreglo de cantidades
+                aux = Rubros[i].Ca
+                Rubros[i].Ca = Rubros[j].Ca
+                Rubros[j].Ca = aux
+                # Ordenando arreglo de rubros
+                aux1 = Rubros[i].Nom.ljust(12," ")
+                Rubros[i].Nom = Rubros[j].Nom.ljust(12," ")
+                Rubros[j].Nom = aux1
+    os.system("cls")
+    borde = "║"
+    label1 = "║    Rubro   "
+    label1 += borde
+    label1 += "Cantidad de Locales"
+    label1 += borde
+    sys.stdout.write("╔")
+    sys.stdout.write(12 * "═")
+    sys.stdout.write("╦")
+    sys.stdout.write(19 * "═")
+    sys.stdout.write("╗\n")
+    print(label1)
+    for i in range(0, 3):
+        sys.stdout.write("╠")
+        sys.stdout.write(12 * "═")
+        sys.stdout.write("╬")
+        sys.stdout.write(19 * "═")
+        sys.stdout.write("╣\n")
+        item = ""
+        item += "║"
+        item += str(Rubros[i].Nom).strip().center(12)
+        item += borde
+        item += str(Rubros[i].Ca).center(19)
+        item += "║"
+        print(item)
+    sys.stdout.write("╚")
+    sys.stdout.write(12 * "═")
+    sys.stdout.write("╩")
+    sys.stdout.write(19 * "═")
+    sys.stdout.write("╝\n")
+    Rubros[0].Nom = "perfumeria".ljust(12," ")
+    Rubros[1].Nom = "indumentaria".ljust(12," ")    
+    Rubros[2].Nom = "comida".ljust(12," ")
+    Rubros[0].Ca = guard_cant0
+    Rubros[1].Ca = guard_cant1
+    Rubros[2].Ca = guard_cant2
+
+def Modificar_Locales():
+    # Procedimiento para la modificación de un local:
+    def Modificacion(pos_reg):
+        verificacion = -2
+        print("Aclaración: si no desea modificar ninguna parte ingrese 0")
+        modif = input(
+            "Que parte del local desea modificar(nombre, ubicación, rubro o codigo de usuario)? "
+        )
+        modif = modif.lower()
+        separador()
+        while (
+            modif != "nombre"
+            and modif != "ubicacion"
+            and modif != "ubicación"
+            and modif != "rubro"
+            and modif != "codigo de usuario"
+            and modif != "0"
+        ):
+            print("Usted ingreso un valor no valido, intentelo de nuevo")
+            separador()
+            modif = input(
+                "Que parte del local desea modificar(nombre, ubicación, rubro o codigo de usuario)? "
+            )
+            modif = modif.lower()
+        # Modificación del nombre:
+        if modif == "nombre":
+            nombre = input("Ingrese otro nombre para el local: ")
+            nombre = nombre.lower()
+            while len(nombre) > 30:
+                print("Usted ingreso un nombre muy largo... ")
+                separador()
+                nombre = input("Ingrese un nombre mas corto: ")
+                nombre = nombre.lower()
+            while verificacion != -1:
+                verificacion = Bd_archivo(nombre)
+                if verificacion == -1:
+                    print("Nombre correcto.")
+                else:
+                    print("Usted ingreso un nombre ya existente")
+                    separador()
+                    nombre = input(
+                        "Ingrese otro nombre de local (si no quiere crear locales ingrese 0): "
+                    )
+                    nombre = nombre.lower()
+            verificacion = -2
+            ALL.seek(pos_reg, 0)
+            R_Loc = pickle.load(ALL)
+            R_Loc.NombreLocal = nombre.ljust(30," ")
+            input("Su modificación se ha realizado con exito, presione ENTER para continuar...")
+        # Modificación de la ubicación:
+        elif modif == "ubicacion" or modif == "ubicación":
+            Ubi = input("Ingrese la nueva ubicación para el local: ")
+            while len(Ubi) > 30:
+                print("Usted ingreso una ubicación muy larga... ")
+                separador()
+                Ubi = input("Ingrese una ubicación mas corta: ")
+            ALL.seek(pos_reg, 0)
+            R_Loc = pickle.load(ALL)
+            R_Loc.UbiLocal = Ubi.ljust(30," ")
+            input("Su modificación se ha realizado con exito, presione ENTER para continuar...")
+        # Modificación del rubro
+        elif modif == "rubro":
+            rubro = input(
+                "Ingrese el nuevo rubro (perfumería, comida o indumentaria): "
+            )
+            rubro = rubro.lower()
+            while ( rubro != "perfumeria"and
+                rubro != "perfumería"
+                and rubro != "indumentaria"
+                and rubro != "comida"
+            ):
+                print(
+                    "Usted no ingreso los datos correctamente, porfavor intentelo otra vez"
+                )
+                separador()
+                rubro = input(
+                    "Ingrese el nuevo rubro del local (perfumería, comida o indumentaria): "
+                )
+                rubro = rubro.lower()
+            ALL.seek(pos_reg, 0)
+            R_Loc = pickle.load(ALL)    
+            tipo = R_Loc.RubroLocal.ljust(12," ")
+            #Buscando el anterior rubro
+            c = 0
+            while Rubros[c].Nom != tipo:
+                c = c + 1
+            Rubros[c].Ca = Rubros[c].Ca - 1
+            #Buscando el nuevo rubro
+            c1 = 0
+            while Rubros[c1].Nom.strip() != rubro:
+                c1 = c1 + 1
+            Rubros[c1].Ca = Rubros[c1].Ca + 1
+            R_Loc.RubroLocal = rubro.ljust(12," ")
+            input("Su modificación se ha realizado con exito, presione ENTER para continuar...")
+        # Modificación del código de usuario
+        elif modif == "codigo de usuario":
+            flag = 0
+            Cod_us = input("Ingrese el codigo de usuario: ")
+            if Cod_us.isdigit():
+                Cod_us = int(Cod_us)
+                Veri = Bs_Usu_Cod(Cod_us)
+                if Veri != -1:
+                    ALL.seek(Veri, 0)
+                    R_Usu = pickle.load(ALU)
+                    if R_Usu.TipoUsuario.strip() == "dueño de local":
+                        flag = 1
+            while flag == 0:
+                print("Usted ingreso un codigo de usuario erroneo, intentelo de nuevo")
+                separador()
+                Cod_us = input("Ingrese el codigo de usuario: ")
+                if Cod_us.isdigit():
+                    Cod_us = int(Cod_us)
+                    Veri = Bs_Usu_Cod(Cod_us)
+                    if Veri != -1:
+                        ALL.seek(Veri, 0)
+                        R_Usu = pickle.load(ALU)
+                        if R_Usu.TipoUsuario.strip() == "dueños de local":
+                            flag = 1
+            ALL.seek(pos_reg, 0)
+            R_Loc = pickle.load(ALL)
+            R_Loc.CodUsuario = Cod_us
+            input("Su modificación se ha realizado con exito, presione ENTER para continuar...")
+        else:
+            print("No se realizó ninguna modificación")
+        if modif != "0":
+            # Cargando al archivo
+            ALL.seek(pos_reg, 0)
+            pickle.dump(R_Loc, ALL)
+            ALL.flush()
+    cod_local = input(
+        "Ingrese el codigo del local que desea modificar(si no desea modificar ninguno ingrese 0): "
+    )
+    while cod_local != "0":
+        if cod_local.isdigit():
+            cod_local = int(cod_local)
+            pos = Bs_Loc(cod_local)
+            if pos == -1:
+                print("Usted ingreso un valor no valido, intentelo de nuevo")
+                separador()
+                cod_local = input(
+                    "Ingrese el codigo del local que desea modificar(si no desea modificar ninguno ingrese 0): "
+                )
+            else:
+                print("Local encontrado!!!")
+                ALL.seek(pos, 0)
+                R_Loc = pickle.load(ALL)
+                if R_Loc.Estado == "B":
+                    print("Este local esta dado de baja")
+                    rta = input("Desea cambiarlo a estado activo? (si o no): ")
+                    while rta != "si" and rta != "no":
+                        print("Porfavor seleccione si o no...")
+                        rta = input("Desea cambiarlo a estado activo? (si o no): ")
+                        rta = rta.lower
+                    if rta == "no":
+                        separador()
+                        cod_local = input(
+                            "Ingrese el codigo de otro local que desee modificar(si no desea modificar ninguno ingrese 0): "
+                        )
+                    else:       
+                        ALL.seek(pos, 0)
+                        R_Loc = pickle.load(ALL)
+                        R_Loc.Estado = "A"
+                        ALL.seek(pos, 0)
+                        pickle.dump(R_Loc, ALL)
+                        ALL.flush()
+                            
+                        tipo = R_Loc.RubroLocal.ljust(12," ")
+                        #Buscando el anterior rubro
+                        c = 0
+                        while Rubros[c].Nom != tipo:
+                            c = c + 1
+                        Rubros[c].Ca = Rubros[c].Ca + 1
+                        Modificacion(pos)
+                        os.system("cls")
+                        separador()
+                        Exhibicion()
+                        cod_local = input(
+                            "Ingrese el siguiente codigo del local que desea modificar(si no desea modificar ninguno ingrese 0): "
+                        )
+                else:
+                    Modificacion(pos)
+                    os.system("cls")
+                    separador()
+                    Exhibicion()
+                    cod_local = input(
+                        "Ingrese el siguiente codigo del local que desea modificar(si no desea modificar ninguno ingrese 0): "
+                    )
+        else:
+            print("Usted ingreso un valor no valido, intentelo de nuevo")
+            separador()
+            cod_local = input(
+                "Ingrese el codigo del local que desea modificar(si no desea modificar ninguno ingrese 0): "
+            )
+
+def Eliminar_Locales():
+    eliminar = input(
+        "Ingrese el codigo del local que desea eliminar(si no desea eliminar ninguno ingrese 0): "
+    )
+    while eliminar != "0":
+        if eliminar.isdigit():
+            eliminar = int(eliminar)
+            pos = Bs_Loc(eliminar)
+            if pos == -1:
+                print("Usted ingreso un valor no valido, intentelo de nuevo")
+                separador()
+                eliminar = input(
+                    "Ingrese el codigo del local que desea eliminar(si no desea modificar ninguno ingrese 0): "
+                )
+            else:
+                print("Local encontrado!!!")
+                ALL.seek(pos, 0)
+                R_Loc = pickle.load(ALL)
+                if R_Loc.Estado == "B":
+                    print("Este local esta dado de baja")
+                    eliminar = input(
+                        "Ingrese otro codigo del local que desee eliminar(si no desea eliminar ninguno ingrese 0): "
+                    )
+                else:
+                    confirmacion = input(
+                        "Desea confirmar la eliminación de este local? (si o no): "
+                    )
+                    while confirmacion != "si" and confirmacion != "no":
+                        print("Porfavor seleccione si o no...")
+                        confirmacion = input(
+                            "Desea confirmar la eliminación de este local? (si o no): "
+                        )
+                    if confirmacion == "no":
+                        separador()
+                        eliminar = input(
+                            "Ingrese otro codigo del local que desee eliminar(si no desea eliminar ninguno ingrese 0): "
+                        )
+                    else:
+                        tipo = R_Loc.RubroLocal.ljust(12," ")
+                        #Buscando el anterior rubro
+                        c = 0
+                        while Rubros[c].Nom != tipo:
+                            c = c + 1
+                        Rubros[c].Ca = Rubros[c].Ca - 1
+                        ALL.seek(pos, 0)
+                        R_Loc.Estado = "B"
+                        pickle.dump(R_Loc, ALL)
+                        ALL.flush()
+                        os.system("cls")
+                        print("El local ha sido eliminado...")
+                        separador()
+                        Exhibicion()
+                        eliminar = input(
+                            "Ingrese el siguiente codigo del local que desee eliminar(si no desea eliminar ninguno ingrese 0): "
+                        )
+        else:
+            print("Usted ingreso un valor no valido, intentelo de nuevo")
+            separador()
+            eliminar = input(
+                "Ingrese el codigo del local que desea eliminar(si no desea eliminar ninguno ingrese 0): "
+            )
+
+def Mapa_Locales():
+    os.system("cls")
+    print(
+        """
+    Referencias: 
+    - \033[0;32mLocal activo\033[0;m
+    - \033[0;31mLocal inactivo\033[0;m
+        """
+    )
+    print("                 Mapa de Locales")
+    print("", "+--------+--------+--------+--------+--------+")
+    ALL.seek(0, 0)
+    for i in range(0, 10):
+        for j in range(0, 5):
+            try:
+                R_Loc = pickle.load(ALL)
+                T = os.path.getsize(AFL)
+                if ALL.tell() <= T and R_Loc.Estado == "A":
+                    Codigo = f"\033[1;32m{R_Loc.CodLocal}\033[0;m"
+                elif ALL.tell() <= T and R_Loc.Estado == "B":
+                    Codigo = f"\033[1;31m{R_Loc.CodLocal}\033[0;m"
+            except:
+                Codigo = 0
+            sys.stdout.write(f" |   {Codigo}   ")
+        print(" |  \n +--------+--------+--------+--------+--------+")
+
+def Reporte_A():
+    TP = os.path.getsize(AFP)
+    if TP != 0:
+        Fecha_d = Validacion_RangoI_Reporte()
+        Fecha_h = Validacion_RangoF_Reporte(Fecha_d)
+        ALL.seek(0,0)
+        ALU.seek(0,0)
+        ALP.seek(0,0)
+        TL = os.path.getsize(AFL)
+        aux_l = pickle.load(ALL)
+        pos_L = ALL.tell()
+        C_R = round(TL/pos_L)
+        Aux = pickle.load(ALP)
+        pos_P = ALP.tell()
+        C_RP = round(TP/pos_P)
+        T = os.path.getsize(AFU)
+        aux = pickle.load(ALU)
+        pos = ALU.tell()
+        C_RU = round(T/pos)
+        ALU.seek(0,0)
+        print("Reporte de promociones:".center(70))
+        print("\n")
+        while ALU.tell() < T:
+            R_Usu = pickle.load(ALU)
+            ALL.seek(0,0)
+            for i in range(0,C_R):
+                R_Loc = pickle.load(ALL)
+                if R_Usu.CodUsuario == R_Loc.CodUsuario:
+                    ALP.seek(0,0)
+                    for j in range(0, C_RP):
+                        R_Pro = pickle.load(ALP)
+                        if R_Pro.CodLocal == R_Loc.CodLocal and R_Pro.Estado.strip() == "aprobada" and R_Pro.FechaDesdePromo >= Fecha_d and R_Pro.FechaHastaPromo <= Fecha_h:
+                            Usos = Conteo_Usos(R_Pro.CodPromo)
+                            print(f"El dueño: \033[0;31m{R_Usu.NombreUsuario.strip()}\033[0;m, Tiene las siguientes promos en el codigo de local {R_Loc.CodLocal}")
+                            print(f"Se uso una cantidad de {Usos} veces la promoción") 
+                            print(f"La promo es: \033[0;31m{R_Pro.TextoPromo.strip()}\033[0;m, los dias disponibles son:")
+                            print(Semana(R_Pro.DiaSemana))
+                            separador()
+        input("Ejecución completada, presione ENTER para continuar...")
+    else:
+        input("No hay promociones disponibles, presione ENTER para volver...")
+
+def Semana(X):
+    dias = ""
+    for i in range(0,7):
+        if X[i] == 1:
+            if i == 0:
+                dias += "Lunes "
+            elif i == 1:
+                dias += "Martes "
+            elif i == 2:
+                dias += "Miercoles "
+            elif i == 3:
+                dias += "Jueves "
+            elif i == 4:
+                dias += "Viernes "
+            elif i == 5:
+                dias += "Sabado "
+            elif i == 6:
+                dias += "Domingo "
+    return dias
+
+# SECCIÓN ADMINISTRADOR CON TODAS SUS SUB-SECCIONES # (Final)
+
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCION  DUEÑOS DE LOCALES CON TODAS SUS SUB-SECCIONES # (Inicio)
+
+def DueñoDelocales():
+    global eleccion
+    eleccion = -1
+    while eleccion >= -1 and eleccion < 4:
+        os.system("cls")
+        separador()
+        mostrar_menu()
+        eleccion = input("Escoger la opción a la que desee acceder: ")
+        if (
+            eleccion != "1"
+            and eleccion != "2"
+            and eleccion != "3"
+            and eleccion != "0"
+        ):
+            os.system("cls")
+            print(
+                "La opción que has elegido es incorrecta, intentelo de nuevo ingresando un numero del 0 al 3."
+            )
+            eleccion = -1
+        else:
+            eleccion = int(eleccion)
+            os.system("cls")
+            match eleccion:
+                case 0:
+                    eleccion = -2
+                case 1:
+                    Crear_Descuentos()
+                    eleccion = -1
+                case 2:
+                    Reporte()
+                case 3:
+                    print("Diagramado en chapin")
+                    input("Presione ENTER para continuar...")
+
+def Crear_Descuentos():
+    global User_g, R_Pro
+    pos = Bs_Usu(User_g)
+    ALU.seek(pos, 0)
+    R_Usu = pickle.load(ALU)
+    ALL.seek(0, 0)
+    #Listado
+    if os.path.getsize(AFP) != 0:
+      while ALL.tell() < os.path.getsize(AFL):
+        R_Loc = pickle.load(ALL)
+        if R_Loc.Estado == "A" and R_Usu.CodUsuario == R_Loc.CodUsuario:
+            print(f"El local \033[92m{R_Loc.NombreLocal.strip()}\033[0m...")
+            ALP.seek(0,0)
+            cond = 0
+            while ALP.tell() < os.path.getsize(AFP):
+              R_Pro = pickle.load(ALP)
+              if R_Loc.CodLocal == R_Pro.CodLocal and R_Pro.FechaDesdePromo >= datetime.date.today() and R_Pro.FechaHastaPromo >= R_Pro.FechaDesdePromo:
+                  print(f"-Promición \033[94m{R_Pro.TextoPromo.strip()}\033[0m tiene un Estado: {R_Pro.Estado}")
+                  cond = 1
+            if cond == 0:
+                print("No presenta promociones")
+                separador()
+    else:
+      print("Aún no hay promociones cargadas. ")
+    if os.path.getsize(AFL) != 0:
+      ALL.seek(0, 0)
+      R_Loc = pickle.load(ALL)
+      T_R = ALL.tell()
+      Cant_R = os.path.getsize(AFL) // T_R
+      Exhibicion_Crear_D()
+      print("Aviso: Ingrese 0 si desea salir")
+      Cod_Loc = Validacion(0, Cant_R,"Ingrese el código del local al que le quiere asignar una promoción")
+      if Cod_Loc != 0:
+            pos = Bs_Loc(Cod_Loc)
+            ALL.seek(pos, 0)
+            R_Loc = pickle.load(ALL)
+            while R_Usu.CodUsuario != R_Loc.CodUsuario and Cod_Loc != 0:
+              os.system("cls")
+              print("El local no pertenece a este dueño.")
+              separador()
+              Exhibicion_Crear_D()
+              print("Aviso: Ingrese 0 si desea salir")
+              Cod_Loc = Validacion(0, Cant_R,"Ingrese el código del local al que le quiere asignar una promoción")
+              if Cod_Loc != 0:
+                  pos = Bs_Loc(Cod_Loc)
+                  ALL.seek(pos, 0)
+                  R_Loc = pickle.load(ALL)
+            if Cod_Loc != 0:
+                if os.path.getsize(AFP) > 0:
+                    ALP.seek(0, 0)
+                    Aux_I = pickle.load(ALP)
+                    T_AP = os.path.getsize(AFP)
+                    T_aux = ALP.tell()
+                    C_RP = round(T_AP / T_aux)
+                    Cod_ant = C_RP
+                else:
+                    Cod_ant = 0
+                ALP.seek(0, 2)
+                R_Pro.CodPromo = Cod_ant + 1
+                R_Pro.TextoPromo = input("Ingrese la descripción de la promoción(Max 30 caracteres): ").ljust(200," ") #Máximo ideal 200, 30 es lo conveniente para mostrarlo en cuadro
+                while len(R_Pro.TextoPromo.strip()) > 30:
+                  print("Usted ingreso una descripción muy larga... ")
+                  separador()
+                  R_Pro.TextoPromo  = input("Ingrese la descripción de la promoción(Max 30 caracteres): ") #Máximo ideal 200, 30 es lo conveniente para mostrarlo en cuadro
+                R_Pro.FechaDesdePromo  = Validacion_fecha_Desde()
+                print("Por favor ingresa la fecha de fin de la promoción: ")
+                R_Pro.FechaHastaPromo = Validacion_fecha()
+                while R_Pro.FechaDesdePromo > R_Pro.FechaHastaPromo:
+                    print("Por favor ingresa la fecha de fin de la promoción: ")
+                    R_Pro.FechaHastaPromo = Validacion_fecha()
+                print("Ingrese los días de semana en los cuales la promoción es válida con 1, si no ingrese 0: ")
+                for i in range(0,7):
+                  R_Pro.DiaSemana[i] = Validacion(0,1,f"Día de la semana {i}: ")
+                R_Pro.Estado = "pendiente".ljust(10," ")
+                R_Pro.CodLocal = Cod_Loc
+                pickle.dump(R_Pro, ALP)
+                ALP.flush()
+                input("Ejecución completada, presione ENTER para continuar...")
+    else:
+        print("Aun no hay, por ende no se pueden crear promociones. ")
+
+def Reporte():
+   if os.path.getsize(AFP) != 0:
+        global User_g
+        pos = Bs_Usu(User_g)
+        ALU.seek(pos, 0)
+        R_Usu = pickle.load(ALU)
+        Fecha_d = Validacion_RangoI_Reporte()
+        Fecha_h = Validacion_RangoF_Reporte(Fecha_d)
+        os.system("cls")
+        print(f"Reporte de uso de descuentos del dueño: \033[93m{R_Usu.NombreUsuario}\033[0m")
+        print(f"Fecha desde: {Fecha_d}              Fecha hasta: {Fecha_h}")
+        separador()
+        ALL.seek(0,0)
+        while ALL.tell() < os.path.getsize(AFL):
+            R_Loc = pickle.load(ALL)
+            if R_Usu.CodUsuario == R_Loc.CodUsuario: 
+                print(f"Local {R_Loc.CodLocal}: \033[92m{R_Loc.NombreLocal}\033[0m")
+                Exhibicion_Reportes(Fecha_d,Fecha_h, R_Loc.CodLocal)
+                print(117 * "-")
+        input("Presione ENTER para continuar...")
+   else:
+       input("No hay promociones cargadas, presione ENTER para volver...")
+
+# SECCION  DUEÑOS DE LOCALES CON TODAS SUS SUB-SECCIONES # (Final)
+
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+# SECCION  CLIENTES CON TODAS SUS SUB-SECCIONES # (Inicio)
+
+def Clientes():
+  global eleccion 
+  eleccion = -1 
+  while eleccion >= -1 and eleccion <= 3:
+      os.system("cls")
+      separador()
+      mostrar_menu()
+      eleccion = Validacion(0,3,"Ingrese una opción")
+      match eleccion:
+          case 0:
+              eleccion = -2
+          case 1: 
+              os.system("cls")
+              Bus_Desc()
+              input("Ejecución completada, presione ENTER para continuar...")
+          case 2:
+              os.system("cls")
+              Solic_Desc()
+              input("Presione ENTER para continuar...")
+          case 3:
+              os.system("cls")
+              print("Esta sección esta diagramada en chapin")
+              input("Presione ENTER para continuar...")
+
+def Bus_Desc():
+  global R_Pro
+  if os.path.getsize(AFP) != 0:
+     ALL.seek(0,0)
+     R_Loc = pickle.load(ALL)
+     T_R = ALL.tell()
+     Cant_R = os.path.getsize(AFL)//T_R
+     Exhibicion()
+     print("Aclaración: si no desea buscar ningun descuento ingrese 0")
+     Cod_local = Validacion_Clientes(0,Cant_R,"Ingrese un código de local")
+     if Cod_local != 0:
+        Fecha = Validacion_fecha()
+        Exhibicion_Clientes(Cod_local,Fecha)
+  else:
+     print("Aún no hay ninguna promoción cargada.")
+
+def Solic_Desc():
+    global User_g
+    if os.path.getsize(AFP) != 0 and Bs_pro_Estado("aprobada".ljust(10," ")) != -1 and Barrido_EstadoyFecha() <= str(datetime.datetime.now()):
+        ALP.seek(0,0)
+        R_Pro = pickle.load(ALP)
+        T_R = ALP.tell()
+        Tam = os.path.getsize(AFP)
+        Cant_R = Tam//T_R
+        Exhibicion_Clientes_Desc()
+        Cod_pro = Validacion(0,Cant_R,"Ingrese el código de la promoción que desea usar: ")
+        Fecha = datetime.datetime.now().date()
+        Pos = Bs_pro(Cod_pro)
+        if Pos != -1:
+            ALP.seek(Pos, 0)
+            R_Pro = pickle.load(ALP)
+            if R_Pro.CodPromo == Cod_pro and R_Pro.Estado.strip() == "aprobada" and R_Pro.FechaDesdePromo <= Fecha and R_Pro.FechaHastaPromo >= Fecha:
+              if R_Pro.DiaSemana[Fecha.weekday()] == 1:
+                    pos = Bs_Usu(User_g)
+                    ALU.seek(pos, 0)
+                    R_Usu = pickle.load(ALU)
+                    R_Uso_Pro.CodCliente = R_Usu.CodUsuario
+                    R_Uso_Pro.CodPromo = Cod_pro
+                    R_Uso_Pro.FechaUsoPromo = Fecha 
+                    ALUP.seek(0,2)
+                    pickle.dump(R_Uso_Pro,ALUP)
+                    ALUP.flush()
+                    print("Promoción utilizada correctamente")
+              else:
+                  print("La promoción no esta activa este dia")
+            else:
+                print("Promoción no disponible.")          
+    else:
+        print("No hay promociones disponibles") 
+      
+
+
+# SECCION  CLIENTES CON TODAS SUS SUB-SECCIONES # (Final)
+
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+""""""
+
+# Declaración de variables...
+
+eleccion = -1
+decision = ""
+bandera = 0
+i_global = 1
+frenar = True
+User_g = ""
+
+# Declaración de las variables que contienen a los registros
+R_Usu = Usuarios()
+R_Loc = Locales()
+R_Pro = Promociones()
+R_Uso_Pro = Uso_Promocion()
+
+# Declaración de variables que contienen la ubicación física de los archivos
+AFU = "C:\\tp3\\Usuarios.dat"
+AFL = "C:\\tp3\\Locales.dat"
+AFP = "C:\\tp3\\Promociones.dat"
+AFUP = "C:\\tp3\\Uso_Promociones.dat"
+
+# Declaración de las variables que contienen a los archivos abiertos
+if os.path.exists(AFU) and os.path.exists(AFL) and os.path.exists(AFP) and os.path.exists(AFUP):
+    ALU = open(AFU, "r+b")
+    ALL = open(AFL, "r+b")
+    ALP = open(AFP, "r+b")
+    ALUP = open(AFUP, "r+b")
+else:
+    ALU = open(AFU, "w+b")
+    ALL = open(AFL, "w+b")
+    ALP = open(AFP, "w+b")
+    ALUP = open(AFUP, "w+b")
+
+if os.path.getsize(AFU) == 0:
+    R_Usu.CodUsuario = 1
+    R_Usu.NombreUsuario = "admin@shopping.com".ljust(100, " ")
+    R_Usu.ClaveUsuario = "12345".ljust(8, " ")
+    R_Usu.TipoUsuario = "administrador".ljust(20, " ")
+    ALU.seek(0, 2)
+    pickle.dump(R_Usu, ALU)
+    ALU.flush()
+
+# PROGRAMA PRINCIPAL #
+os.system("cls")
+Menu_principal()
+Eleccion = Validacion(1, 3,"Ingrese una opción")
+while Eleccion != 3 and bandera != -1:
+    if Eleccion == 1:
+        pedirusuario()
+        match cod.strip():
+            case "administrador":
+                Admin()
+            case "dueño de local":
+                DueñoDelocales()
+            case "cliente":
+                Clientes()
+    else:
+        Registrarse()
+    if bandera != -1:
+        os.system("cls")
+        Menu_principal()
+        Eleccion = Validacion(1, 3,"Ingrese una opción")
+Finalizar()
+os.system("cls")
+print("\033[3;31mSaliendo del programa...\033[0;m")
+time.sleep(2)
